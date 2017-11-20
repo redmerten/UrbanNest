@@ -1,67 +1,25 @@
 /**
- * Created by CameronMerten on 10/1/17.
+ * Created by AndreaMerten on 10/1/17.
  */
 
-import React from 'react'
-import {
-  Button,
-  Menu,
-  MenuItem,
-  Classes,
-  MenuDivider,
-  PopoverInteractionKind,
-  Popover,
-  Position
-} from "@blueprintjs/core"
-import '@blueprintjs/core/dist/blueprint.css'
+import React, {Component} from 'react'
+//import {connect} from 'react-redux'
+//import {fetchProducts} from '../actions/index'
+//import axios from 'axios'
+//import {Icon} from 'react-fa'
+import ProductList from './ProductList'
 
-const inline = {
-  display: "inline"
-}
 
-const Landing = () => {
+class Landing extends Component {
 
-  const csItems = ['Order Status', 'Returns', 'Provide Feedback']
-  const aboutUs =['Careers', 'Blogs']
-  const legal = ['Terms and Conditions', 'Privacy Rights', 'CA Supply Chain Act']
-
-  const footerMenu = (which) => {
-    return which.map(e => {
-      return (
-        <MenuItem key={e} text={e}></MenuItem>
-      )
-    })
-  }
-
-  return (
-    //{{}} js inside jsx and object inside
-    //everything in div will be centered
-    <div style={{'textAlign': 'center', "padding":"50px"}} >
-      <div>
-        <h1>
-          Lots of Pics Here in the LANDING!
-        </h1>
-        Array of pictures
-      </div>
-      <div inline="true">
-        <Menu inline={true}>
-          Customer Service
-          {footerMenu(csItems)}
-        </Menu>
-        <Menu inline={true}>
-          About Us
-          {footerMenu(aboutUs)}
-        </Menu>
-        <Menu inline={true}>
-          Legal
-          {footerMenu(legal)}
-        </Menu>
+  render(){
+    //console.log('landing props', this.state.props)
+    return (
+      <div style={{'textAlign': 'center', "paddingTop":"80px", 'marginLeft':'50px', 'width':'960px'}}>
+        <ProductList/>
       </div>
 
-    </div>
-
-
-  )
+    )}
 }
 
 export default Landing

@@ -4,8 +4,10 @@ const cookieSession = require('cookie-session')
 const passport = require('passport')
 const keys = require('./config/keys')
 
-//let mongoose know about schema. this must be listed before passport below
+//let mongoose know about schema. User must be listed before passport below
 require('./models/User')
+require('./models/Product')
+require('./models/Cart')
 
 require('./services/passport')
 //instead use below require without authRoutes(app)
@@ -45,10 +47,16 @@ app.use(passport.session())
 //authRoutes(app)
 //could also do this without the import require statement above
 require('./routes/authRoutes')(app)
+require('./routes/productRoutes')(app)
+require('./routes/cartRoutes')(app)
+require('./routes/imageRoutes')(app)
 
 //heroku will pass runtime variables, if dev use 5000
 const PORT = process.env.PORT || 5000
 //express tells node to listen on port 5000
 app.listen(PORT)
 
+
+//comment out after first load
+//require('./services/fillProductDatabase')()
 

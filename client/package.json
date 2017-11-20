@@ -13,6 +13,7 @@
   "dependencies": {
     "@blueprintjs/core": "^1.29.0",
     "axios": "^0.16.2",
+    "flexbox-react": "^4.4.0",
     "grommet": "^1.8.0",
     "grommet-cli": "^5.1.2",
     "react": "^16.0.0",
@@ -24,6 +25,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.74.2"
   },
   "scripts": {

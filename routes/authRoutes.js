@@ -10,17 +10,35 @@ const passport = require('passport')
 module.exports = app=> {
   //-------GOOGLE----------------
   app.get('/auth/google', passport.authenticate('google', {
-    scope: ['profile', 'email']
+    scope: ['profile', 'email'],
+    prompt: 'select_account'
   })
   )
+
+  /*
 //this handle the callback when google sends response back
-  app.get('/auth/google/callback', passport.authenticate('google'))
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google')),
+    (req, res) => {
+    res.redirect('/')
+    }
+*/
+
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", {
+      successRedirect: "/",
+      failureRedirect: "/auth/google"
+    })
+  )
 
   //to logout  kill cookie
   //to see cookie, set dev console to look at network then look at
   app.get('/api/logout', (req, res)=>{
     req.logout()
-    res.send(req.user) //response will be empty because there is no longer a user
+    //res.send(req.user) //response will be empty because there is no longer a user
+    res.redirect('/')
   })
 
   app.get('/api/current_user', (req, res)=>{
