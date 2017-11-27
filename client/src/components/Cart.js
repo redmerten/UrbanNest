@@ -20,7 +20,6 @@ import {
 } from "@blueprintjs/core"
 import '@blueprintjs/core/dist/blueprint.css'
 
-//0: {id: 1233, color: "white", size: "twin", quantity: 1, _id: "5a0de81ae307e8d5afe9d88d"}length: 1__proto__: Array(0)
 
 class Cart extends Component {
 
@@ -36,15 +35,14 @@ class Cart extends Component {
     if (!items){
       return (<div>Cart is Empty</div>)
     }
-  else
-    {
+    else {
       console.log('cart from cart', items)
       return (
-        <div style={{'display': 'flex', 'padding': '100px'}}>
+        <div style={{'display': 'flex', 'flexDirection':'column', 'padding': '100px'}}>
 
           {items.map((e, i) => {
             return (
-              <div key={i}>
+              <div key={i} style={{'marginBottom':'50px'}}>
                 <h4>{e.title}</h4>
                 <div style={divStyle}>
                   Holder for image
@@ -53,7 +51,6 @@ class Cart extends Component {
                   <p>Item: #{e.id}</p>
                   <p>Color: {e.color}</p>
                   <p>Size: {e.size} </p>
-
                   <p>Quantity: {e.quantity}</p>
                 </div>
 

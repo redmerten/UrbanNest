@@ -6,7 +6,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {getCart, fetchProducts} from '../actions'
+import {getCart, fetchUser, fetchProducts} from '../actions'
 import _ from 'lodash'
 import {
   //Button,
@@ -29,11 +29,11 @@ const tableTypes = ["Table Cloths","Napkins" , "Runners" ]
 
 class Header extends Component {
 
-  //need to update cart if logged in.  This doesnt work bc auth is still null
+
   componentDidMount() {
-    console.log('auth', this.props.auth)
-    if (this.props.auth)
-      this.props.getCart()
+    this.props.fetchUser()
+    this.props.getCart()
+
   }
 
   renderProductMenu(type) {
@@ -103,21 +103,43 @@ class Header extends Component {
     case false:
       return (<p/>)
     default:  //this will be logged in
-      console.log('from cart q', this.props.cart)
-      return (<p style={{'marginTop':'10px'}}>{this.props.cartQuantity}</p>)
+      //console.log('from cart q', this.props.cart.items)
+      if (this.props.cart.items) {
+        const q= this.props.cart.items.reduce((acc, e)=>{return (acc+e.quantity)},0)
+
+        return (<p style={{'marginTop': '10px'}}>{q}</p>)
+      }
+      else return(<p/>)
     }
   }
 
-  linkToCart(q){
-    switch(this.props.cartQuantity){
-      case 0:
-        return(<button className="pt-button pt-minimal pt-icon-shopping-cart"></button>)
+  linkToCart(){
+    switch (this.props.auth){
+      case null:
+        return (<button className="pt-button pt-minimal pt-icon-shopping-cart"></button>)
+      case false:
+        return (<button className="pt-button pt-minimal pt-icon-shopping-cart"></button>)
       default:
-        return(
-        <Link to={`/cart` } >
-          <button className="pt-button pt-minimal pt-icon-shopping-cart"></button>
-        </Link>
-      )
+        if (this.props.cart.items){
+          const q= this.props.cart.items.reduce((acc, e)=>{return (acc+e.quantity)},0)
+          return (
+            <Link to={`/cart` }>
+              <button className="pt-button pt-minimal pt-icon-shopping-cart"></button>
+            </Link>
+          )
+        }
+        else return(<button className="pt-button pt-minimal pt-icon-shopping-cart"></button>)
+
+        // switch(q) {
+        //   case 0 || null || false:
+        //     return (<button className="pt-button pt-minimal pt-icon-shopping-cart"></button>)
+        //   default:
+        //     return (
+        //       <Link to={`/cart` }>
+        //         <button className="pt-button pt-minimal pt-icon-shopping-cart"></button>
+        //       </Link>
+        //     )
+        // }
     }
   }
 
@@ -189,4 +211,4 @@ class Header extends Component {
 const mapStateToProps = (state) => {
   return state
 }
-export default connect(mapStateToProps,{getCart, fetchProducts})(Header)
+export default connect(mapStateToProps,{getCart, fetchUser, fetchProducts})(Header)
