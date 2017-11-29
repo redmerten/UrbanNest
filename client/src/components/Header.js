@@ -29,7 +29,6 @@ const tableTypes = ["Table Cloths","Napkins" , "Runners" ]
 
 class Header extends Component {
 
-
   componentDidMount() {
     this.props.fetchUser()
     this.props.getCart()

@@ -2,7 +2,8 @@
  * Created by AndreaMerten on 11/15/17.
  */
 
-import {ADD_TO_CART, GET_CART, UPDATE_CART_QUANTITY} from '../actions/types'
+import {ADD_TO_CART, GET_CART, EDIT_CART, REMOVE_ITEM,
+UPDATE_CART_QUANTITY} from '../actions/types'
 
 
 
@@ -16,7 +17,10 @@ export default function (state = [], action) {
       return action.payload
     case GET_CART:
       return action.payload
-
+    case EDIT_CART:
+      return action.payload
+    case REMOVE_ITEM:
+      return action.payload
     default:
       return state
   }

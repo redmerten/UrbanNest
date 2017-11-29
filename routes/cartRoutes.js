@@ -62,15 +62,46 @@ module.exports = (app) => {
           })
         res.send(uCart)
       }
-      else
+      else {
         //add to card
         userCart.set({items: [...userCart.items, {title, id, color, size, quantity, price}]})
-        userCart.save((err)=>{
+        userCart.save((err) => {
           if (err) console.log(err)
           res.send(userCart)
         })
         console.log('Cart from routes', userCart)
         //res.send(userCart)
+      }
+  })
+
+  app.get('/api/remove', requireLogin, async (req,res) =>{
+    console.log('from api remove', req.query.i)
+    const {i} = req.query
+    const userCart = await Cart.findOne({_user: req.user.id}, (err)=> {
+      if (err) {
+        console.log('error from addtocart', err)
+        //make a new cart
+        //const {color, id, size, quantity} = req.body //eg title = req.body.title
+      }
+    })
+    if (!userCart) {
+      console.log('no cart')
+
+    }
+    else {
+      //add to card
+      const items = userCart.items
+      console.log('items before removal', items)
+      items.splice(i, 1)
+      console.log('items after removal', items)
+      userCart.set({items: items})
+      userCart.save((err) => {
+        if (err) console.log(err)
+        res.send(userCart)
+      })
+      console.log('Remove from Cart from routes', userCart)
+      //res.send(userCart)
+    }
   })
 
 }

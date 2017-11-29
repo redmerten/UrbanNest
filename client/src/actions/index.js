@@ -6,7 +6,8 @@
 
 
 import {FETCH_USER, FETCH_PRODUCTS, FETCH_IMAGE,
-FETCH_DETAIL, ADD_TO_CART, GET_CART, UPDATE_CART_QUANTITY} from './types'
+FETCH_DETAIL, ADD_TO_CART, GET_CART, UPDATE_CART_QUANTITY,
+EDIT_CART, REMOVE_ITEM} from './types'
 
 import axios from 'axios'
 
@@ -80,4 +81,20 @@ export const updateCartQuantity = (q)=>{
   return({type: UPDATE_CART_QUANTITY, payload: q})
 }
 
+export const editCart = (title, strId, color, size, quantity, price) => async dispatch => {
+  const id = parseInt(strId)
+  const res = await axios.get('/api/editCart',
+    {params: {title, id, color, size, quantity, price}}
+  )
+  //returns cart array
+  dispatch ({type: EDIT_CART, payload: res.data})
+}
 
+//i is the item's place in the cart array
+export const removeItem = (i) => async dispatch =>{
+  const res = await axios.get('/api/remove',
+    {params: {i}}
+  )
+  //returns cart array
+  dispatch ({type: REMOVE_ITEM, payload: res.data})
+}
